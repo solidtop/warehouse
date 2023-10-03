@@ -3,25 +3,21 @@ package com.example.warehouse.resources;
 import com.example.warehouse.entities.Product;
 import com.example.warehouse.entities.ProductCategory;
 import com.example.warehouse.service.ProductService;
-import com.example.warehouse.service.Warehouse;
-import com.example.warehouse.validators.ProductValidator;
 import jakarta.inject.Inject;
 import jakarta.validation.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Request;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ProductResource {
     private ProductService productService;
 
@@ -40,16 +36,13 @@ public class ProductResource {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addNewProduct(@Valid ProductRequest productRequest) { //TODO: Fix category conversion
+    public Response addNewProduct(@Valid ProductRequest productRequest) {
         String name = productRequest.name();
         ProductCategory category = ProductCategory.valueOf(productRequest.category().toUpperCase());
         int rating = productRequest.rating();
         Product product = productService.addNewProduct(name, category, rating);
         return Response.ok(product).build();
     }
-
-    //@PUT
 
     @GET
     @Path("/{id}")
@@ -60,6 +53,20 @@ public class ProductResource {
         }
 
         return Response.ok(productOptional.get()).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    public Response updateProduct(@PathParam("id") String id, @Valid ProductRequest productRequest) {
+        try {
+            String name = productRequest.name();
+            ProductCategory category = ProductCategory.valueOf(productRequest.category().toUpperCase());
+            int rating = productRequest.rating();
+            Product product = productService.updateProduct(id, name, category, rating);
+            return Response.ok(product).build();
+        } catch (IllegalArgumentException | NoSuchElementException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("No product found").build();
+        }
     }
 
     @GET

@@ -1,4 +1,4 @@
-package com.example.warehouse.resources;
+package com.example.warehouse.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;

@@ -1,5 +1,6 @@
 package com.example.warehouse.resources;
 
+import com.example.warehouse.dto.ProductRequest;
 import com.example.warehouse.entities.Product;
 import com.example.warehouse.entities.ProductCategory;
 import com.example.warehouse.service.ProductService;

@@ -1,8 +1,8 @@
 package com.example.warehouse.service;
 
-import com.example.warehouse.entities.Product;
-import com.example.warehouse.entities.Products;
-import com.example.warehouse.entities.ProductCategory;
+import com.example.warehouse.entity.Product;
+import com.example.warehouse.entity.Products;
+import com.example.warehouse.entity.ProductCategory;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.Clock;
@@ -19,8 +19,6 @@ public class Warehouse implements ProductService {
     public Warehouse() {
         products = new ArrayList<>();
         clock = Clock.systemDefaultZone();
-
-        products.add(new Product("0", "Product", ProductCategory.BOOKS, 5, LocalDateTime.now(clock), LocalDateTime.now(clock)));
     }
 
     public Warehouse(Clock clock) {

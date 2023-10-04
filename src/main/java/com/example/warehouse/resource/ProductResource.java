@@ -1,8 +1,8 @@
-package com.example.warehouse.resources;
+package com.example.warehouse.resource;
 
+import com.example.warehouse.entity.Product;
+import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.dto.ProductRequest;
-import com.example.warehouse.entities.Product;
-import com.example.warehouse.entities.ProductCategory;
 import com.example.warehouse.service.ProductService;
 import jakarta.inject.Inject;
 import jakarta.validation.*;
@@ -11,10 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Path("/products")
 @Produces(MediaType.APPLICATION_JSON)

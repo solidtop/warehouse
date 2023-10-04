@@ -4,6 +4,9 @@ import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.dto.ProductRequest;
 import com.example.warehouse.service.ProductService;
+import com.example.warehouse.validation.ProductValidator;
+import com.example.warehouse.dto.ErrorResponse;
+import com.example.warehouse.validation.ValidationResult;
 import jakarta.inject.Inject;
 import jakarta.validation.*;
 import jakarta.ws.rs.*;
@@ -18,13 +21,15 @@ import java.util.*;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProductResource {
     private ProductService productService;
+    private ProductValidator productValidator;
 
     public ProductResource() {
     }
 
     @Inject
-    public ProductResource(ProductService productService) {
+    public ProductResource(ProductService productService, ProductValidator productValidator) {
         this.productService = productService;
+        this.productValidator = productValidator;
     }
 
     @GET
@@ -34,7 +39,12 @@ public class ProductResource {
     }
 
     @POST
-    public Response addNewProduct(@Valid ProductRequest productRequest) {
+    public Response addNewProduct(ProductRequest productRequest) {
+        ValidationResult result = productValidator.validate(productRequest);
+        if (!result.getErrors().isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(result).build();
+        }
+
         String name = productRequest.name();
         ProductCategory category = ProductCategory.valueOf(productRequest.category().toUpperCase());
         int rating = productRequest.rating();
@@ -55,7 +65,12 @@ public class ProductResource {
 
     @PUT
     @Path("/{id}")
-    public Response updateProduct(@PathParam("id") String id, @Valid ProductRequest productRequest) {
+    public Response updateProduct(@PathParam("id") String id, ProductRequest productRequest) {
+        ValidationResult result = productValidator.validate(productRequest);
+        if (!result.getErrors().isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(result).build();
+        }
+
         try {
             String name = productRequest.name();
             ProductCategory category = ProductCategory.valueOf(productRequest.category().toUpperCase());

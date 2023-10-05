@@ -3,7 +3,7 @@ package com.example.warehouse.service;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.Products;
 import com.example.warehouse.entity.ProductCategory;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.Singleton;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@ApplicationScoped
+@Singleton
 public class Warehouse implements ProductService {
     private final List<Product> products;
     private final Clock clock;

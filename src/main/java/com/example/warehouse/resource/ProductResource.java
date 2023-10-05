@@ -5,10 +5,8 @@ import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.dto.ProductRequest;
 import com.example.warehouse.service.ProductService;
 import com.example.warehouse.validation.ProductValidator;
-import com.example.warehouse.dto.ErrorResponse;
 import com.example.warehouse.validation.ValidationResult;
 import jakarta.inject.Inject;
-import jakarta.validation.*;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
@@ -78,7 +76,7 @@ public class ProductResource {
             Product product = productService.updateProduct(id, name, category, rating);
             return Response.ok(product).build();
         } catch (IllegalArgumentException | NoSuchElementException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("No product found").build();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 
@@ -96,8 +94,8 @@ public class ProductResource {
             ProductCategory productCategory = ProductCategory.valueOf(category.toUpperCase());
             List<Product> products = productService.getProductsByCategory(productCategory);
             return Response.ok(products).build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+        } catch(IllegalArgumentException e) {
+            return Response.ok(Collections.emptyList()).build();
         }
     }
 }

@@ -1,33 +1,33 @@
-package com.example.warehouse.resources;
+package com.example.warehouse.resource;
 
+import com.example.warehouse.entity.Product;
+import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.dto.ProductRequest;
-import com.example.warehouse.entities.Product;
-import com.example.warehouse.entities.ProductCategory;
 import com.example.warehouse.service.ProductService;
+import com.example.warehouse.validation.ProductValidator;
+import com.example.warehouse.validation.ValidationResult;
 import jakarta.inject.Inject;
-import jakarta.validation.*;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProductResource {
     private ProductService productService;
+    private ProductValidator productValidator;
 
     public ProductResource() {
     }
 
     @Inject
-    public ProductResource(ProductService productService) {
+    public ProductResource(ProductService productService, ProductValidator productValidator) {
         this.productService = productService;
+        this.productValidator = productValidator;
     }
 
     @GET
@@ -37,7 +37,12 @@ public class ProductResource {
     }
 
     @POST
-    public Response addNewProduct(@Valid ProductRequest productRequest) {
+    public Response addNewProduct(ProductRequest productRequest) {
+        ValidationResult result = productValidator.validate(productRequest);
+        if (!result.getErrors().isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(result).build();
+        }
+
         String name = productRequest.name();
         ProductCategory category = ProductCategory.valueOf(productRequest.category().toUpperCase());
         int rating = productRequest.rating();
@@ -58,7 +63,12 @@ public class ProductResource {
 
     @PUT
     @Path("/{id}")
-    public Response updateProduct(@PathParam("id") String id, @Valid ProductRequest productRequest) {
+    public Response updateProduct(@PathParam("id") String id, ProductRequest productRequest) {
+        ValidationResult result = productValidator.validate(productRequest);
+        if (!result.getErrors().isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(result).build();
+        }
+
         try {
             String name = productRequest.name();
             ProductCategory category = ProductCategory.valueOf(productRequest.category().toUpperCase());
@@ -66,7 +76,7 @@ public class ProductResource {
             Product product = productService.updateProduct(id, name, category, rating);
             return Response.ok(product).build();
         } catch (IllegalArgumentException | NoSuchElementException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("No product found").build();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 
@@ -84,8 +94,8 @@ public class ProductResource {
             ProductCategory productCategory = ProductCategory.valueOf(category.toUpperCase());
             List<Product> products = productService.getProductsByCategory(productCategory);
             return Response.ok(products).build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+        } catch(IllegalArgumentException e) {
+            return Response.ok(Collections.emptyList()).build();
         }
     }
 }

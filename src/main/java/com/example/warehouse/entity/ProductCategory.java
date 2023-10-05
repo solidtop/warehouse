@@ -1,4 +1,4 @@
-package com.example.warehouse.entities;
+package com.example.warehouse.entity;
 
 public enum ProductCategory {
     BOOKS,

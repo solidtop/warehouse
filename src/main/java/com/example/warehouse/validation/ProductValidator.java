@@ -1,7 +1,6 @@
 package com.example.warehouse.validation;
 
-import com.example.warehouse.dto.ErrorResponse;
-import com.example.warehouse.dto.ProductRequest;
+import com.example.warehouse.dto.ProductDto;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -15,11 +14,11 @@ public class ProductValidator {
     private final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = factory.getValidator();
 
-    public ValidationResult validate(ProductRequest productRequest) {
-        Set<ConstraintViolation<ProductRequest>> violations = validator.validate(productRequest);
+    public ValidationResult validate(ProductDto productRequest) {
+        Set<ConstraintViolation<ProductDto>> violations = validator.validate(productRequest);
         ValidationResult result = new ValidationResult();
         if (!violations.isEmpty()) {
-            for (ConstraintViolation<ProductRequest> violation : violations) {
+            for (ConstraintViolation<ProductDto> violation : violations) {
                 result.addError(
                         violation.getPropertyPath().toString(),
                         violation.getMessage()

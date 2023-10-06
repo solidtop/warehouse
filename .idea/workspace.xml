@@ -11,14 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e0794d31-660e-4183-83c4-a646e122d10a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/ProductRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/ProductDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/entity/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ProductValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ProductValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/warehouse/service/WarehouseTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ProductValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ValidationResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ValidationResult.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,7 +223,7 @@
       <workItem from="1696315608672" duration="19437000" />
       <workItem from="1696400340014" duration="14599000" />
       <workItem from="1696489483591" duration="21820000" />
-      <workItem from="1696569692601" duration="10010000" />
+      <workItem from="1696569692601" duration="22547000" />
     </task>
     <servers />
   </component>

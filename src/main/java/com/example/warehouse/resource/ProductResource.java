@@ -35,15 +35,11 @@ public class ProductResource {
 
     @POST
     public Response addNewProduct(@Valid ProductDto productDto) {
-        try {
-            String name = productDto.name();
-            ProductCategory category = ProductCategory.valueOf(productDto.category().toUpperCase());
-            int rating = productDto.rating();
-            productService.addNewProduct(name, category, rating);
-            return Response.status(Response.Status.CREATED).build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
+        String name = productDto.name();
+        ProductCategory category = ProductCategory.valueOf(productDto.category().toUpperCase());
+        int rating = productDto.rating();
+        productService.addNewProduct(name, category, rating);
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @GET
@@ -74,5 +70,22 @@ public class ProductResource {
         String name = productNameDto.name();
         productService.updateProduct(id, name);
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("/categories")
+    public Set<ProductCategory> getAllCategories() {
+        return productService.getCategoriesWithProducts();
+    }
+
+    @GET
+    @Path("/categories/{category}")
+    public List<Product> getProductsByCategory(@PathParam("category") String category) {
+        try {
+            ProductCategory productCategory = ProductCategory.valueOf(category.toUpperCase());
+            return productService.getProductsByCategory(productCategory);
+        } catch (IllegalArgumentException e) {
+            return Collections.emptyList();
+        }
     }
 }

@@ -9,8 +9,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.time.Clock;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class Warehouse implements ProductService {
@@ -78,13 +80,78 @@ public class Warehouse implements ProductService {
     }
 
     @Override
+    public Optional<Product> getProductById(String productId) {
+        return productRepository.findById(productId);
+    }
+
+    @Override
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
     @Override
-    public Optional<Product> getProductById(String productId) {
-        return productRepository.findById(productId);
+    public List<Product> getProductsByCategory(ProductCategory category) {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .filter(product -> product.category() == category)
+                .sorted(Comparator.comparing(Product::name))
+                .toList();
+    }
+
+    @Override
+    public List<Product> getProductsSince(LocalDate date) {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .filter(product -> product.createdAt().isAfter(date.atStartOfDay()))
+                .toList();
+    }
+
+    @Override
+    public List<Product> getModifiedProducts() {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .filter(product -> product.updatedAt().isAfter(product.createdAt()))
+                .toList();
+    }
+
+    @Override
+    public List<Product> getTopRatedProductsThisMonth() {
+        LocalDate today = LocalDate.now(clock);
+        int currentMonth = today.getMonthValue();
+
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .filter(product -> product.createdAt().getMonthValue() == currentMonth)
+                .filter(product -> product.rating() == Products.MAX_RATING)
+                .sorted(Comparator.comparing(Product::createdAt).reversed())
+                .toList();
+    }
+
+    @Override
+    public Set<ProductCategory> getCategoriesWithProducts() {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .map(Product::category)
+                .collect(Collectors.toUnmodifiableSet());
+    }
+
+    @Override
+    public Map<Character, Long> getProductCountByFirstLetter() {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .collect(Collectors.groupingBy(
+                        product -> product.name().charAt(0),
+                        Collectors.counting()
+                ));
+    }
+
+    @Override
+    public int getProductCountInCategory(ProductCategory category) {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .filter(product -> product.category() == category)
+                .mapToInt(product -> 1)
+                .reduce(0, Integer::sum);
     }
 
     private String generateId() {

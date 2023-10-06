@@ -5,14 +5,6 @@ import com.example.warehouse.dto.ErrorResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidationResult {
-    private final List<ErrorResponse> errors = new ArrayList<>();
+public record ValidationResult(List<ErrorResponse> errors) {
 
-    public List<ErrorResponse> getErrors() {
-        return errors;
-    }
-
-    public void addError(String field, String message) {
-        errors.add(new ErrorResponse(field, message));
-    }
 }

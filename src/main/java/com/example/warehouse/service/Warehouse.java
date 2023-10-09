@@ -1,6 +1,5 @@
 package com.example.warehouse.service;
 
-import com.example.warehouse.dto.ProductDto;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.entity.Products;
@@ -21,14 +20,15 @@ public class Warehouse implements ProductService {
 
     public Warehouse() {}
 
-    public Warehouse(Clock clock) {
-        this.clock = clock;
-    }
-
     @Inject
     public Warehouse(ProductRepository productRepository) {
         this.productRepository = productRepository;
         clock = Clock.systemDefaultZone();
+    }
+
+    public Warehouse(ProductRepository productRepository, Clock clock) {
+        this.productRepository = productRepository;
+        this.clock = clock;
     }
 
     @Override

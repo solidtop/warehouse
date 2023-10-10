@@ -11,17 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e0794d31-660e-4183-83c4-a646e122d10a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/pagination/PageRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/Pagination.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/pagination/Pagination.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/WarehouseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/WarehouseRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ValidationExceptionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ConstraintViolationExceptionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ValidationResult.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/exception/ProductNotFoundException.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,7 +247,7 @@
       <workItem from="1696489483591" duration="21820000" />
       <workItem from="1696569692601" duration="27556000" />
       <workItem from="1696832389218" duration="13013000" />
-      <workItem from="1696920569543" duration="10432000" />
+      <workItem from="1696920569543" duration="10676000" />
     </task>
     <servers />
   </component>

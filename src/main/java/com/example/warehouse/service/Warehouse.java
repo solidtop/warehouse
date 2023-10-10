@@ -3,6 +3,7 @@ package com.example.warehouse.service;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.entity.Products;
+import com.example.warehouse.dto.Pagination;
 import com.example.warehouse.repository.ProductRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -87,6 +88,11 @@ public class Warehouse implements ProductService {
     @Override
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public List<Product> getAllProducts(Pagination pagination) {
+        return productRepository.findAll(pagination);
     }
 
     @Override

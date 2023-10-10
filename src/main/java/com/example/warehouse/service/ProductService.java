@@ -1,8 +1,8 @@
 package com.example.warehouse.service;
 
-import com.example.warehouse.dto.ProductDto;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
+import com.example.warehouse.dto.Pagination;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +18,7 @@ public interface ProductService {
     Product updateProduct(String productId, String name, ProductCategory category, int rating);
     Optional<Product> getProductById(String productId);
     List<Product> getAllProducts();
+    List<Product> getAllProducts(Pagination pagination);
     List<Product> getProductsByCategory(ProductCategory category);
     List<Product> getProductsSince(LocalDate date);
     List<Product> getModifiedProducts();

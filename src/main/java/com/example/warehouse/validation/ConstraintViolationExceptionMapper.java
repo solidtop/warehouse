@@ -3,30 +3,27 @@ package com.example.warehouse.validation;
 import com.example.warehouse.dto.ErrorResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Provider
-public class ValidationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
+public class ConstraintViolationExceptionMapper  implements ExceptionMapper<ConstraintViolationException> {
     @Override
     public Response toResponse(ConstraintViolationException e) {
-        List<ErrorResponse> errors = new ArrayList<>();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+        List<ErrorResponse> errors = new ArrayList<>();
+
         for (ConstraintViolation<?> violation : violations) {
             String field = extractFieldName(violation.getPropertyPath().toString());
             String message = violation.getMessage();
             errors.add(new ErrorResponse(field, message));
         }
-
-        ValidationResult result = new ValidationResult(errors);
-        return Response.status(Response.Status.BAD_REQUEST).entity(result).build();
+        Map<String, List<ErrorResponse>> response = new HashMap<>();
+        response.put("errors", errors);
+        return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
     }
 
     private String extractFieldName(String propertyPath) {

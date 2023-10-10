@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public record Product(
             String id,
 
+            @NotBlank(message = "name cannot be empty")
             String name,
             ProductCategory category,
             int rating,

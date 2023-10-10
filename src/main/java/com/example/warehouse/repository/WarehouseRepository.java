@@ -1,10 +1,13 @@
 package com.example.warehouse.repository;
 
 import com.example.warehouse.entity.Product;
+import com.example.warehouse.entity.ProductCategory;
+import com.example.warehouse.dto.Pagination;
 import jakarta.ejb.Lock;
 import jakarta.ejb.LockType;
 import jakarta.ejb.Singleton;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +19,9 @@ public class WarehouseRepository implements ProductRepository {
 
     public WarehouseRepository() {
         products = new ArrayList<>();
+        for(int i = 0; i < 50; i++) {
+            products.add(new Product(Integer.toString(i), "Product" + i, ProductCategory.MUSIC, (int) Math.round(Math.random() * 10), LocalDateTime.now(), LocalDateTime.now()));
+        }
     }
 
     @Override
@@ -35,6 +41,20 @@ public class WarehouseRepository implements ProductRepository {
     @Lock(LockType.READ)
     public List<Product> findAll() {
         return Collections.unmodifiableList(products);
+    }
+
+    @Override
+    @Lock(LockType.READ)
+    public List<Product> findAll(Pagination pagination) {
+        long page = pagination.getPage();
+        long limit = pagination.getLimit();
+
+        long offset = (page - 1) * limit;
+
+        return products.stream()
+                .skip(offset)
+                .limit(limit)
+                .toList();
     }
 
     @Override

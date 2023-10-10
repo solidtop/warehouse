@@ -10,12 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0794d31-660e-4183-83c4-a646e122d10a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/ProductRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/entity/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/pagination/PageRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/Pagination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/pagination/Pagination.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/ProductRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/WarehouseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/WarehouseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ValidationExceptionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ConstraintViolationExceptionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/validation/ValidationResult.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +89,20 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.WarehouseTest">
+    <configuration name="Mai" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Mai" />
+      <module name="warehouse" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="warehouse" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="JBoss/WildFly 29.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 29.0.1.Final" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER" value="false" />
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
@@ -171,7 +191,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WarehouseTest.Should_ReturnCategoriesTiedToAtLeast1Product" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="WarehouseTest.Should_AddNewProduct" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="warehouse" />
       <extension name="coverage">
         <pattern>
@@ -181,7 +201,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.example.warehouse.service" />
       <option name="MAIN_CLASS_NAME" value="com.example.warehouse.service.WarehouseTest" />
-      <option name="METHOD_NAME" value="Should_ReturnCategoriesTiedToAtLeast1Product" />
+      <option name="METHOD_NAME" value="Should_AddNewProduct" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -203,53 +223,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WarehouseTest.Should_ReturnProductCountInSpecifiedCategory" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="warehouse" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.warehouse.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.warehouse.service" />
-      <option name="MAIN_CLASS_NAME" value="com.example.warehouse.service.WarehouseTest" />
-      <option name="METHOD_NAME" value="Should_ReturnProductCountInSpecifiedCategory" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WarehouseTest.Should_ReturnProductsWithMaxRatingThisMonthSortedByNewest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="warehouse" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.warehouse.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.warehouse.service" />
-      <option name="MAIN_CLASS_NAME" value="com.example.warehouse.service.WarehouseTest" />
-      <option name="METHOD_NAME" value="Should_ReturnProductsWithMaxRatingThisMonthSortedByNewest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
+      <item itemvalue="Application.Mai" />
+      <item itemvalue="Application.Main" />
       <item itemvalue="JBoss/WildFly Server.JBoss/WildFly 29.0.1.Final" />
-      <item itemvalue="JUnit.WarehouseTest.Should_ReturnCategoriesTiedToAtLeast1Product" />
+      <item itemvalue="JUnit.WarehouseTest.Should_AddNewProduct" />
       <item itemvalue="JUnit.WarehouseTest.Should_ReturnEmptyResult_When_NoProductsFound" />
-      <item itemvalue="JUnit.WarehouseTest.Should_ReturnProductCountInSpecifiedCategory" />
-      <item itemvalue="JUnit.WarehouseTest.Should_ReturnProductsWithMaxRatingThisMonthSortedByNewest" />
       <item itemvalue="JUnit.WarehouseTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.WarehouseTest" />
+        <item itemvalue="Application.Mai" />
+        <item itemvalue="JUnit.WarehouseTest.Should_AddNewProduct" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.WarehouseTest.Should_ReturnEmptyResult_When_NoProductsFound" />
-        <item itemvalue="JUnit.WarehouseTest.Should_ReturnProductsWithMaxRatingThisMonthSortedByNewest" />
-        <item itemvalue="JUnit.WarehouseTest.Should_ReturnProductCountInSpecifiedCategory" />
-        <item itemvalue="JUnit.WarehouseTest.Should_ReturnCategoriesTiedToAtLeast1Product" />
       </list>
     </recent_temporary>
   </component>
@@ -268,7 +256,8 @@
       <workItem from="1696400340014" duration="14599000" />
       <workItem from="1696489483591" duration="21820000" />
       <workItem from="1696569692601" duration="27556000" />
-      <workItem from="1696832389218" duration="7029000" />
+      <workItem from="1696832389218" duration="13013000" />
+      <workItem from="1696920569543" duration="10432000" />
     </task>
     <servers />
   </component>

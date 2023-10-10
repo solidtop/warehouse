@@ -4,6 +4,7 @@ import com.example.warehouse.dto.ProductNameDto;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.dto.ProductDto;
 import com.example.warehouse.entity.ProductCategory;
+import com.example.warehouse.dto.Pagination;
 import com.example.warehouse.service.ProductService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -29,8 +30,8 @@ public class ProductResource {
     }
 
     @GET
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public List<Product> getAllProducts(@BeanParam @Valid Pagination pagination) {
+        return productService.getAllProducts(pagination);
     }
 
     @POST

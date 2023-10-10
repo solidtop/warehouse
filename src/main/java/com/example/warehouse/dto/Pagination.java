@@ -1,20 +1,21 @@
-package com.example.warehouse.pagination;
+package com.example.warehouse.dto;
 
 import jakarta.validation.constraints.Positive;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.QueryParam;
 
-public class PageRequest {
+import java.util.Objects;
+
+public final class Pagination {
 
     @QueryParam("page")
     @DefaultValue("1")
     @Positive
     private long page;
-
-    @QueryParam("size")
-    @DefaultValue("3")
+    @QueryParam("limit")
+    @DefaultValue("10")
     @Positive
-    private long size;
+    private long limit;
 
     public long getPage() {
         return page;
@@ -24,19 +25,20 @@ public class PageRequest {
         this.page = page;
     }
 
-    public long getSize() {
-        return size;
+    public long getLimit() {
+        return limit;
     }
 
-    public void setSize(long size) {
-        this.size = size;
+    public void setLimit(long limit) {
+        this.limit = limit;
     }
 
     @Override
     public String toString() {
-        return "PageRequest{" +
-                "page=" + page +
-                ", size=" + size +
-                '}';
+        return "Pagination[" +
+                "page=" + page + ", " +
+                "limit=" + limit + ']';
     }
+
+
 }

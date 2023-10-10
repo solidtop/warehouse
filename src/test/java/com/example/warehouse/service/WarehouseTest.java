@@ -1,37 +1,48 @@
-package org.example.warehouse.service;
+package com.example.warehouse.service;
 
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
-import com.example.warehouse.service.Warehouse;
+import com.example.warehouse.repository.ProductRepository;
+import com.example.warehouse.repository.WarehouseRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.time.*;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 class WarehouseTest {
-    private Clock fixedClock;
+    private Warehouse warehouse;
+    @Mock
+    private ProductRepository productRepository;
     private LocalDateTime now;
     private Product mockProduct;
-    private List<Product> mockProducts;
 
     @BeforeEach
     void setUp() {
-        fixedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+        productRepository = mock(WarehouseRepository.class);
+        Clock fixedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+        warehouse = new Warehouse(productRepository, fixedClock);
+
         now = LocalDateTime.now(fixedClock);
         mockProduct = new Product("1", "Product1", ProductCategory.BOOKS, 0, now, now);
-        mockProducts = Arrays.asList(
+        List<Product> mockProducts = Arrays.asList(
                 mockProduct,
                 new Product("2", "Product2", ProductCategory.BOOKS, 0, now, now)
         );
+
+        when(productRepository.findAll()).thenReturn(mockProducts);
+        when(productRepository.findById(anyString())).thenReturn(Optional.of(mockProduct));
+        doNothing().when(productRepository).save(any());
     }
 
     @Test
     void Should_AddNewProduct() {
-        Warehouse warehouse = new Warehouse(fixedClock);
-
         Product product = warehouse.addNewProduct("TestProduct", ProductCategory.BOOKS, 5);
 
         assertNotNull(product);
@@ -45,16 +56,12 @@ class WarehouseTest {
 
     @Test
     void Should_ThrowException_IfNameIsEmpty() {
-        Warehouse warehouse = new Warehouse();
-
         assertThrows(IllegalArgumentException.class, () ->
                 warehouse.addNewProduct("", ProductCategory.BOOKS, 5));
     }
 
     @Test
     void Should_ThrowException_IfRatingIsInvalid() {
-        Warehouse warehouse = new Warehouse();
-
         assertThrows(IllegalArgumentException.class, () ->
                 warehouse.addNewProduct("Product", ProductCategory.BOOKS, -1));
         assertThrows(IllegalArgumentException.class, () ->
@@ -63,8 +70,6 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnAllProducts() {
-        Warehouse warehouse = new Warehouse(mockProducts);
-
         List<Product> products = warehouse.getAllProducts();
 
         int expected = 2;
@@ -74,8 +79,6 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnProduct_IfExists() {
-        Warehouse warehouse = new Warehouse(mockProducts);
-
         Optional<Product> productOptional = warehouse.getProductById(mockProduct.id());
 
         assertTrue(productOptional.isPresent());
@@ -84,7 +87,7 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnEmptyOptional_IfProductNotExists() {
-        Warehouse warehouse = new Warehouse();
+        when(productRepository.findById(mockProduct.id())).thenReturn(Optional.empty());
 
         Optional<Product> productOptional = warehouse.getProductById(mockProduct.id());
 
@@ -93,8 +96,6 @@ class WarehouseTest {
 
     @Test
     void Should_UpdateProductName() {
-        Warehouse warehouse = new Warehouse(mockProducts);
-
         Product updatedProduct = warehouse.updateProduct(mockProduct.id(), "UpdatedProduct");
 
         String expected = "UpdatedProduct";
@@ -104,8 +105,6 @@ class WarehouseTest {
 
     @Test
     void Should_UpdateProductCategory() {
-        Warehouse warehouse = new Warehouse(mockProducts);
-
         Product updatedProduct = warehouse.updateProduct(mockProduct.id(), ProductCategory.MUSIC);
 
         ProductCategory expected = ProductCategory.MUSIC;
@@ -115,8 +114,6 @@ class WarehouseTest {
 
     @Test
     void Should_UpdateProductRating() {
-        Warehouse warehouse = new Warehouse(mockProducts);
-
         Product updatedProduct = warehouse.updateProduct(mockProduct.id(), 5);
 
         int expected = 5;
@@ -128,7 +125,6 @@ class WarehouseTest {
     void Should_UpdateAllProductDetails() {
         LocalDateTime createdAt = now.minusMinutes(1);
         Product mockProduct = new Product("1", "Product", ProductCategory.BOOKS, 2, createdAt, createdAt);
-        Warehouse warehouse = new Warehouse(Arrays.asList(mockProduct), fixedClock);
 
         Product updatedProduct = warehouse.updateProduct(mockProduct.id(), "UpdatedProduct", ProductCategory.VIDEO_GAMES, 10);
 
@@ -140,7 +136,7 @@ class WarehouseTest {
 
     @Test
     void Should_ThrowException_IfInvalidUpdateProductDetails() {
-        Warehouse warehouse = new Warehouse(mockProducts);
+        when(productRepository.findById("abc")).thenReturn(Optional.empty());
 
         assertThrows(NoSuchElementException.class, () ->
                 warehouse.updateProduct("abc", "UpdatedProduct"));
@@ -154,10 +150,10 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnProductsInCategorySortedByAlphabeticalOrder() {
-        Warehouse warehouse = new Warehouse(List.of(
-                new Product("1", "DFG", ProductCategory.BOOKS, 5, now, now),
-                new Product("2", "HIJ", ProductCategory.MUSIC, 6, now, now),
-                new Product("3", "ABC", ProductCategory.BOOKS, 8, now, now)
+        when(productRepository.findAll()).thenReturn(List.of(
+                new Product("1", "C", ProductCategory.BOOKS, 5, now, now),
+                new Product("2", "B", ProductCategory.MUSIC, 5, now, now),
+                new Product("3", "A", ProductCategory.BOOKS, 5, now, now)
         ));
 
         List<Product> booksProducts = warehouse.getProductsByCategory(ProductCategory.BOOKS);
@@ -170,7 +166,7 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnProductsSinceSpecifiedDate() {
-        Warehouse warehouse = new Warehouse(List.of(
+        when(productRepository.findAll()).thenReturn(List.of(
                 new Product("1", "Product1", ProductCategory.BOOKS, 5, now.minusDays(5), now.minusDays(5)),
                 new Product("2", "Product2", ProductCategory.MUSIC, 6, now.minusDays(3), now.minusDays(3)),
                 new Product("3", "Product3", ProductCategory.BOOKS, 8, now, now)
@@ -186,7 +182,7 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnModifiedProducts() {
-        Warehouse warehouse = new Warehouse(List.of(
+        when(productRepository.findAll()).thenReturn(List.of(
                 new Product("1", "Product1", ProductCategory.BOOKS, 8, now, now.plusMinutes(1)),
                 new Product("2", "Product2", ProductCategory.BOOKS, 8, now, now),
                 new Product("3", "Product3", ProductCategory.BOOKS, 8, now, now.plusHours(1))
@@ -201,7 +197,7 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnCategoriesTiedToAtLeast1Product() {
-        Warehouse warehouse = new Warehouse(List.of(
+        when(productRepository.findAll()).thenReturn(List.of(
                 new Product("1", "Product1", ProductCategory.BOOKS, 8, now, now),
                 new Product("2", "Product2", ProductCategory.VIDEO_GAMES, 4, now, now),
                 new Product("3", "Product3", ProductCategory.BOOKS, 3, now, now)
@@ -216,7 +212,7 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnProductCountInSpecifiedCategory() {
-        Warehouse warehouse = new Warehouse(List.of(
+        when(productRepository.findAll()).thenReturn(List.of(
                 new Product("1", "Product1", ProductCategory.BOOKS, 8, now, now),
                 new Product("2", "Product2", ProductCategory.VIDEO_GAMES, 4, now, now),
                 new Product("3", "Product3", ProductCategory.BOOKS, 3, now, now)
@@ -230,7 +226,7 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnProductsWithMaxRatingThisMonthSortedByNewest() {
-        Warehouse warehouse = new Warehouse(List.of(
+        when(productRepository.findAll()).thenReturn(List.of(
                 new Product("1", "Product1", ProductCategory.BOOKS, 10, now.minusMonths(1), now.minusMonths(1)),
                 new Product("2", "Product2", ProductCategory.BOOKS, 10, now.minusMinutes(2), now.minusMinutes(2)),
                 new Product("3", "Product3", ProductCategory.BOOKS, 10, now.minusMinutes(1), now.minusMinutes(1)),
@@ -248,7 +244,7 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnProductCountByFirstLetter() {
-        Warehouse warehouse = new Warehouse(List.of(
+        when(productRepository.findAll()).thenReturn(List.of(
                 new Product("1", "Abc", ProductCategory.BOOKS, 10, now, now),
                 new Product("2", "Bcd", ProductCategory.BOOKS, 10, now, now),
                 new Product("3", "Abc", ProductCategory.BOOKS, 10, now, now)
@@ -264,7 +260,7 @@ class WarehouseTest {
 
     @Test
     void Should_ReturnEmptyResult_When_NoProductsFound() {
-        Warehouse warehouse = new Warehouse();
+        when(productRepository.findAll()).thenReturn(Collections.emptyList());
 
         List<Product> allProducts = warehouse.getAllProducts();
         List<Product> booksProducts = warehouse.getProductsByCategory(ProductCategory.BOOKS);

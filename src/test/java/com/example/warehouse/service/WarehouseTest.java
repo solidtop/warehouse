@@ -1,12 +1,19 @@
 package com.example.warehouse.service;
 
+import com.example.warehouse.dto.Pagination;
+import com.example.warehouse.dto.ProductDto;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
+import com.example.warehouse.exception.ProductNotFoundException;
 import com.example.warehouse.repository.ProductRepository;
 import com.example.warehouse.repository.WarehouseRepository;
+import jakarta.ws.rs.WebApplicationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.*;
 import java.util.*;
@@ -17,15 +24,15 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 class WarehouseTest {
-    private Warehouse warehouse;
     @Mock
     private ProductRepository productRepository;
+    private Warehouse warehouse;
     private LocalDateTime now;
     private Product mockProduct;
 
     @BeforeEach
     void setUp() {
-        productRepository = mock(WarehouseRepository.class);
+        productRepository = mock(ProductRepository.class);
         Clock fixedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
         warehouse = new Warehouse(productRepository, fixedClock);
 
@@ -37,7 +44,7 @@ class WarehouseTest {
         );
 
         when(productRepository.findAll()).thenReturn(mockProducts);
-        when(productRepository.findById(anyString())).thenReturn(Optional.of(mockProduct));
+        when(productRepository.findById(mockProduct.id())).thenReturn(Optional.of(mockProduct));
         doNothing().when(productRepository).save(any());
     }
 
@@ -78,20 +85,31 @@ class WarehouseTest {
     }
 
     @Test
-    void Should_ReturnProduct_IfExists() {
-        Optional<Product> productOptional = warehouse.getProductById(mockProduct.id());
+    void Should_ReturnPaginatedProducts() {
+        Pagination pagination = new Pagination().setPage(1).setLimit(1);
+        when(productRepository.findAll(pagination)).thenReturn(List.of(mockProduct));
 
-        assertTrue(productOptional.isPresent());
-        assertEquals(mockProduct, productOptional.get());
+        List<Product> products = warehouse.getAllProducts(pagination);
+
+        assertEquals(1, products.size());
+        assertEquals(mockProduct, products.getFirst());
     }
 
     @Test
-    void Should_ReturnEmptyOptional_IfProductNotExists() {
+    void Should_ReturnProduct_IfExists() {
+        Product product = warehouse.getProductById(mockProduct.id());
+
+        assertNotNull(product);
+        assertEquals(mockProduct, product);
+    }
+
+    @Test
+    void Should_ThrowException_IfProductNotExists() {
         when(productRepository.findById(mockProduct.id())).thenReturn(Optional.empty());
 
-        Optional<Product> productOptional = warehouse.getProductById(mockProduct.id());
-
-        assertTrue(productOptional.isEmpty());
+        assertThrows(ProductNotFoundException.class, () -> {
+            warehouse.getProductById(mockProduct.id());
+        });
     }
 
     @Test
@@ -138,7 +156,7 @@ class WarehouseTest {
     void Should_ThrowException_IfInvalidUpdateProductDetails() {
         when(productRepository.findById("abc")).thenReturn(Optional.empty());
 
-        assertThrows(NoSuchElementException.class, () ->
+        assertThrows(ProductNotFoundException.class, () ->
                 warehouse.updateProduct("abc", "UpdatedProduct"));
         assertThrows(IllegalArgumentException.class, () ->
                 warehouse.updateProduct(mockProduct.id(), ""));

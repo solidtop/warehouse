@@ -1,15 +1,16 @@
 package com.example.warehouse.validation;
 
-
-import com.example.warehouse.entity.Products;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import jakarta.validation.ReportAsSingleViolation;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraintvalidation.SupportedValidationTarget;
 import jakarta.validation.constraintvalidation.ValidationTarget;
-import org.hibernate.validator.constraints.Range;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 @Constraint(
         validatedBy = {}
@@ -17,10 +18,10 @@ import java.lang.annotation.*;
 @SupportedValidationTarget({ValidationTarget.ANNOTATED_ELEMENT})
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Range(min = 0, max = 10)
+@NotBlank
 @ReportAsSingleViolation
-public @interface Rating {
-    String message() default "Rating must be between " + Products.MIN_RATING + " and " + Products.MAX_RATING;
+public @interface Name {
+    String message() default "Name cannot be blank";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

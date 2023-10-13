@@ -1,11 +1,14 @@
 package com.example.warehouse.repository;
 
+import com.example.warehouse.dto.Metadata;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.dto.Pagination;
 import jakarta.ejb.Lock;
 import jakarta.ejb.LockType;
 import jakarta.ejb.Singleton;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,14 +22,11 @@ public class WarehouseRepository implements ProductRepository {
 
     public WarehouseRepository() {
         products = new ArrayList<>();
-        for(int i = 0; i < 50; i++) {
-            products.add(new Product(Integer.toString(i), "Product" + i, ProductCategory.MUSIC, (int) Math.round(Math.random() * 10), LocalDateTime.now(), LocalDateTime.now()));
-        }
     }
 
     @Override
     @Lock(LockType.WRITE)
-    public void save(Product product) {
+    public void save(@Valid Product product) {
         Optional<Product> productOptional = findById(product.id());
         if (productOptional.isPresent()) {
             int index = products.indexOf(productOptional.get());
@@ -45,7 +45,7 @@ public class WarehouseRepository implements ProductRepository {
 
     @Override
     @Lock(LockType.READ)
-    public List<Product> findAll(Pagination pagination) {
+    public List<Product> findAll(@Valid Pagination pagination) {
         long page = pagination.getPage();
         long limit = pagination.getLimit();
 
@@ -59,9 +59,16 @@ public class WarehouseRepository implements ProductRepository {
 
     @Override
     @Lock(LockType.READ)
-    public Optional<Product> findById(String productId) {
+    public Optional<Product> findById(@NotNull String productId) {
         return products.stream()
                 .filter(product -> product.id().equals(productId))
                 .findFirst();
+    }
+
+    @Override
+    @Lock(LockType.READ)
+    public Metadata fetchMetadata(@Valid Pagination pagination) {
+        long totalPages = Math.round((float) products.size() / pagination.getLimit());
+        return new Metadata(pagination.getPage(), pagination.getLimit(), products.size(), totalPages);
     }
 }

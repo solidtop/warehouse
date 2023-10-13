@@ -21,16 +21,18 @@ public final class Pagination {
         return page;
     }
 
-    public void setPage(long page) {
+    public Pagination setPage(long page) {
         this.page = page;
+        return this;
     }
 
     public long getLimit() {
         return limit;
     }
 
-    public void setLimit(long limit) {
+    public Pagination setLimit(long limit) {
         this.limit = limit;
+        return this;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.warehouse.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import com.example.warehouse.validation.Name;
 
-public record ProductNameDto(@NotBlank String name) {
+public record ProductNameDto(@Name String name) {
 }

@@ -1,12 +1,17 @@
 package com.example.warehouse.service;
 
+import com.example.warehouse.dto.Metadata;
+import com.example.warehouse.dto.ProductDto;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.entity.Products;
 import com.example.warehouse.dto.Pagination;
+import com.example.warehouse.exception.ProductNotFoundException;
 import com.example.warehouse.repository.ProductRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -47,7 +52,7 @@ public class Warehouse implements ProductService {
 
     @Override
     public Product updateProduct(String productId, String name, ProductCategory category, int rating) {
-        Product product = getProductByIdThrows(productId);
+        Product product = getProductById(productId);
         validateName(name);
         validateRating(rating);
         return updateProduct(product, name, category, rating);
@@ -55,20 +60,20 @@ public class Warehouse implements ProductService {
 
     @Override
     public Product updateProduct(String productId, String name) {
-        Product product = getProductByIdThrows(productId);
+        Product product = getProductById(productId);
         validateName(name);
         return updateProduct(product, name, product.category(), product.rating());
     }
 
     @Override
     public Product updateProduct(String productId, ProductCategory category) {
-        Product product = getProductByIdThrows(productId);
+        Product product = getProductById(productId);
         return updateProduct(product, product.name(), category, product.rating());
     }
 
     @Override
     public Product updateProduct(String productId, int rating) {
-        Product product = getProductByIdThrows(productId);
+        Product product = getProductById(productId);
         validateRating(rating);
         return updateProduct(product, product.name(), product.category(), rating);
     }
@@ -81,8 +86,9 @@ public class Warehouse implements ProductService {
     }
 
     @Override
-    public Optional<Product> getProductById(String productId) {
-        return productRepository.findById(productId);
+    public Product getProductById(String productId) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+        return productOptional.orElseThrow(ProductNotFoundException::new);
     }
 
     @Override
@@ -91,7 +97,7 @@ public class Warehouse implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts(Pagination pagination) {
+    public List<Product> getAllProducts(@Valid Pagination pagination) {
         return productRepository.findAll(pagination);
     }
 
@@ -160,6 +166,11 @@ public class Warehouse implements ProductService {
                 .reduce(0, Integer::sum);
     }
 
+    @Override
+    public Metadata getMetadata(@Valid Pagination pagination) {
+        return productRepository.fetchMetadata(pagination);
+    }
+
     private String generateId() {
         return UUID.randomUUID().toString();
     }
@@ -172,10 +183,5 @@ public class Warehouse implements ProductService {
     private void validateRating(int rating) throws IllegalArgumentException {
         if (rating < Products.MIN_RATING || rating > Products.MAX_RATING)
             throw new IllegalArgumentException("Rating must be between " + Products.MIN_RATING + " and " + Products.MAX_RATING);
-    }
-
-    private Product getProductByIdThrows(String productId) throws NoSuchElementException {
-        Optional<Product> productOptional = productRepository.findById(productId);
-        return productOptional.orElseThrow(() -> new NoSuchElementException("Product not found"));
     }
 }

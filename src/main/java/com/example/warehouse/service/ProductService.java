@@ -1,8 +1,12 @@
 package com.example.warehouse.service;
 
+import com.example.warehouse.dto.Metadata;
+import com.example.warehouse.dto.ProductDto;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.dto.Pagination;
+import com.example.warehouse.exception.ProductNotFoundException;
+import jakarta.validation.Valid;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,9 +20,9 @@ public interface ProductService {
     Product updateProduct(String productId, ProductCategory category);
     Product updateProduct(String productId, int rating);
     Product updateProduct(String productId, String name, ProductCategory category, int rating);
-    Optional<Product> getProductById(String productId);
+    Product getProductById(String productId);
     List<Product> getAllProducts();
-    List<Product> getAllProducts(Pagination pagination);
+    List<Product> getAllProducts(@Valid Pagination pagination);
     List<Product> getProductsByCategory(ProductCategory category);
     List<Product> getProductsSince(LocalDate date);
     List<Product> getModifiedProducts();
@@ -26,4 +30,5 @@ public interface ProductService {
     Set<ProductCategory> getCategoriesWithProducts();
     Map<Character, Long> getProductCountByFirstLetter();
     int getProductCountInCategory(ProductCategory category);
+    Metadata getMetadata(@Valid Pagination pagination);
 }

@@ -1,17 +1,19 @@
 package com.example.warehouse.entity;
 
 import com.example.warehouse.validation.Category;
-import jakarta.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
+import com.example.warehouse.validation.Name;
+import com.example.warehouse.validation.Rating;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
 public record Product(
+            @NotNull
             String id,
-
-            @NotBlank(message = "name cannot be empty")
+            @Name
             String name,
             ProductCategory category,
+            @Rating
             int rating,
             LocalDateTime createdAt,
             LocalDateTime updatedAt) {

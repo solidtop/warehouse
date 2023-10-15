@@ -2,7 +2,6 @@ package com.example.warehouse.repository;
 
 import com.example.warehouse.dto.Metadata;
 import com.example.warehouse.entity.Product;
-import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.dto.Pagination;
 import jakarta.ejb.Lock;
 import jakarta.ejb.LockType;
@@ -10,7 +9,6 @@ import jakarta.ejb.Singleton;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

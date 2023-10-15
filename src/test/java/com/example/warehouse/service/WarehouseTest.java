@@ -1,26 +1,19 @@
 package com.example.warehouse.service;
 
 import com.example.warehouse.dto.Pagination;
-import com.example.warehouse.dto.ProductDto;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.exception.ProductNotFoundException;
 import com.example.warehouse.repository.ProductRepository;
-import com.example.warehouse.repository.WarehouseRepository;
-import jakarta.ws.rs.WebApplicationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.*;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 class WarehouseTest {

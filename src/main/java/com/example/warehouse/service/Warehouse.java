@@ -1,7 +1,6 @@
 package com.example.warehouse.service;
 
 import com.example.warehouse.dto.Metadata;
-import com.example.warehouse.dto.ProductDto;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.entity.Products;
@@ -11,7 +10,6 @@ import com.example.warehouse.repository.ProductRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.Clock;
 import java.time.LocalDate;

@@ -1,17 +1,14 @@
 package com.example.warehouse.service;
 
 import com.example.warehouse.dto.Metadata;
-import com.example.warehouse.dto.ProductDto;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.dto.Pagination;
-import com.example.warehouse.exception.ProductNotFoundException;
 import jakarta.validation.Valid;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public interface ProductService {

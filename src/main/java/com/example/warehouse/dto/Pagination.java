@@ -4,8 +4,6 @@ import jakarta.validation.constraints.Positive;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.QueryParam;
 
-import java.util.Objects;
-
 public final class Pagination {
 
     @QueryParam("page")

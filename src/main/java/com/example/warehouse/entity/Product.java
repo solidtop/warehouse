@@ -1,6 +1,5 @@
 package com.example.warehouse.entity;
 
-import com.example.warehouse.validation.Category;
 import com.example.warehouse.validation.Name;
 import com.example.warehouse.validation.Rating;
 import jakarta.validation.constraints.NotNull;

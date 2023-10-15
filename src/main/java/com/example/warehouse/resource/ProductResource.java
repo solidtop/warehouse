@@ -3,7 +3,6 @@ package com.example.warehouse.resource;
 import com.example.warehouse.dto.*;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
-import com.example.warehouse.exception.ProductNotFoundException;
 import com.example.warehouse.interceptor.Log;
 import com.example.warehouse.service.ProductService;
 import jakarta.inject.Inject;
@@ -12,6 +11,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -70,10 +71,10 @@ public class ProductResource {
 
     @PATCH
     @Path("/{id}")
-    public Response updateProductName(@PathParam("id") String id, @Valid ProductNameDto productNameDto) {
-        String name = productNameDto.name();
+    public Response updateProductName(@PathParam("id") String id, @Valid NameDto nameDto) {
+        String name = nameDto.name();
         productService.updateProduct(id, name);
-        return Response.ok().build();
+        return Response.noContent().build();
     }
 
     @GET

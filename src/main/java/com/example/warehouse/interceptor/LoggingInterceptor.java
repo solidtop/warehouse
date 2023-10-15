@@ -7,6 +7,8 @@ import jakarta.interceptor.InvocationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION)
 @Log
@@ -15,7 +17,9 @@ public class LoggingInterceptor {
 
     @AroundInvoke
     public Object logMethodEntry(InvocationContext context) throws Exception {
-        logger.info("Call to method " + context.getMethod().getName() + " in "
+        logger.info("Call to method " + context.getMethod().getName() + " with parameters: "
+                + Arrays.toString(context.getParameters())
+                + " in "
                 + context.getMethod().getDeclaringClass());
 
         return context.proceed();

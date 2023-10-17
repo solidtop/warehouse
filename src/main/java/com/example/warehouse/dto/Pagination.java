@@ -5,7 +5,6 @@ import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.QueryParam;
 
 public final class Pagination {
-
     @QueryParam("page")
     @DefaultValue("1")
     @Positive

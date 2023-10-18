@@ -44,8 +44,8 @@ public class ProductResource {
     }
 
     @POST
-    public Response addNewProduct(@Valid ProductDTO productDto) {
-        productService.addNewProduct(productDto);
+    public Response addNewProduct(@Valid ProductDTO productDTO) {
+        productService.addNewProduct(productDTO);
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -57,15 +57,15 @@ public class ProductResource {
 
     @PUT
     @Path("/{id}")
-    public Response updateProduct(@PathParam("id") String id, @Valid ProductDTO productDto) {
-        productService.updateProduct(id, productDto);
+    public Response updateProduct(@PathParam("id") String id, @Valid ProductDTO productDTO) {
+        productService.updateProduct(id, productDTO);
         return Response.ok().build();
     }
 
     @PATCH
     @Path("/{id}")
-    public Response updateProductName(@PathParam("id") String id, @Valid NameDTO nameDto) {
-        productService.updateProduct(id, nameDto);
+    public Response updateProductName(@PathParam("id") String id, @Valid NameDTO nameDTO) {
+        productService.updateProduct(id, nameDTO);
         return Response.noContent().build();
     }
 

@@ -10,8 +10,6 @@ import com.example.warehouse.repository.ProductRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
 
 import java.time.Clock;
 import java.time.LocalDate;

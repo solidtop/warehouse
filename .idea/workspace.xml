@@ -11,11 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e0794d31-660e-4183-83c4-a646e122d10a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/NameDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/ProductDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/warehouse/repository/WarehouseRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/warehouse/repository/WarehouseRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +88,7 @@
       <recent name="com.example.warehouse.exception" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.WarehouseRepositoryTest.Should_ReturnPaginatedProductsInCategory">
+  <component name="RunManager" selected="JBoss/WildFly Server.JBoss/WildFly 29.0.1.Final">
     <configuration name="JBoss/WildFly 29.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 29.0.1.Final" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER" value="false" />
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />

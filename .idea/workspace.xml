@@ -10,17 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0794d31-660e-4183-83c4-a646e122d10a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/NameDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/NameDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/Pagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/Pagination.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/ProductDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/NameDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/dto/ProductDto.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/WarehouseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/WarehouseRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/warehouse/service/WarehouseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/warehouse/service/WarehouseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/warehouse/repository/WarehouseRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/warehouse/repository/WarehouseRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +61,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;1.0.0&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -96,7 +91,7 @@
       <recent name="com.example.warehouse.exception" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProductValidationTest">
+  <component name="RunManager" selected="JUnit.WarehouseRepositoryTest.Should_ReturnPaginatedProductsInCategory">
     <configuration name="JBoss/WildFly 29.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 29.0.1.Final" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER" value="false" />
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
@@ -201,7 +196,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WarehouseRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="WarehouseRepositoryTest.Should_ReturnPaginatedProductsInCategory" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="warehouse" />
       <extension name="coverage">
         <pattern>
@@ -211,7 +206,8 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.example.warehouse.repository" />
       <option name="MAIN_CLASS_NAME" value="com.example.warehouse.repository.WarehouseRepositoryTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="Should_ReturnPaginatedProductsInCategory" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -250,19 +246,19 @@
     </configuration>
     <list>
       <item itemvalue="JBoss/WildFly Server.JBoss/WildFly 29.0.1.Final" />
+      <item itemvalue="JUnit.WarehouseRepositoryTest.Should_ReturnPaginatedProductsInCategory" />
       <item itemvalue="JUnit.ProductValidationTest" />
       <item itemvalue="JUnit.ProductValidationTest.Should_ReturnViolations_IfInvalidProduct" />
-      <item itemvalue="JUnit.WarehouseRepositoryTest" />
       <item itemvalue="JUnit.WarehouseRepositoryTest.Should_SaveNewProduct" />
       <item itemvalue="JUnit.WarehouseRepositoryTest.Should_UpdateExistingProduct" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.WarehouseRepositoryTest.Should_ReturnPaginatedProductsInCategory" />
         <item itemvalue="JUnit.ProductValidationTest" />
         <item itemvalue="JUnit.ProductValidationTest.Should_ReturnViolations_IfInvalidProduct" />
         <item itemvalue="JUnit.WarehouseRepositoryTest.Should_UpdateExistingProduct" />
         <item itemvalue="JUnit.WarehouseRepositoryTest.Should_SaveNewProduct" />
-        <item itemvalue="JUnit.WarehouseRepositoryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -288,7 +284,8 @@
       <workItem from="1697177396696" duration="22590000" />
       <workItem from="1697396413715" duration="1245000" />
       <workItem from="1697440116038" duration="13515000" />
-      <workItem from="1697526497299" duration="13625000" />
+      <workItem from="1697526497299" duration="16149000" />
+      <workItem from="1697614717381" duration="370000" />
     </task>
     <servers />
   </component>

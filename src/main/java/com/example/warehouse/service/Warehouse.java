@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 public class Warehouse implements ProductService {
     private ProductRepository productRepository;
     private Clock clock;
-    Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     public Warehouse() {}
 

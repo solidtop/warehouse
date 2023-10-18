@@ -100,4 +100,20 @@ class WarehouseRepositoryTest {
         assertEquals(expected, actual);
         assertEquals('A', booksProducts.get(0).name().charAt(0));
     }
+
+    @Test
+    void Should_ReturnPaginatedProductsInCategory() {
+        WarehouseRepository warehouseRepository = new WarehouseRepository(List.of(
+                new Product("1", "C", ProductCategory.BOOKS, 5, now, now),
+                new Product("2", "B", ProductCategory.MUSIC, 5, now, now),
+                new Product("3", "A", ProductCategory.BOOKS, 5, now, now)
+        ));
+        Pagination pagination = new Pagination().setPage(1).setLimit(1);
+
+        List<Product> products = warehouseRepository.findByCategory("books", pagination);
+
+        int expected = 1;
+        int actual = products.size();
+        assertEquals(expected, actual);
+    }
 }

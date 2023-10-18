@@ -7,9 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,17 +22,17 @@ class WarehouseRepositoryTest {
     void setUp() {
         now = LocalDateTime.now();
         mockProduct = new Product("1", "Product1", ProductCategory.BOOKS, 0, now, now);
-        mockProducts = Arrays.asList(
+        mockProducts = new ArrayList<>(Arrays.asList(
                 mockProduct,
                 new Product("2", "Product2", ProductCategory.BOOKS, 0, now, now)
-        );
+        ));
         warehouseRepository = new WarehouseRepository(mockProducts);
         mockPagination = new Pagination().setPage(1).setLimit(10);
     }
 
     @Test
     void Should_SaveNewProduct() {
-        Product newProduct = new Product("3", "NewProduct", ProductCategory.BOOKS, 0, now, now);
+        Product newProduct = new Product("3", "NewProduct", ProductCategory.MUSIC, 0, now, now);
 
         warehouseRepository.save(newProduct);
 

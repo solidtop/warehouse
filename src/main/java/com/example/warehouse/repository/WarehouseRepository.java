@@ -30,10 +30,9 @@ public class WarehouseRepository implements ProductRepository {
         if (productOptional.isPresent()) {
             int index = products.indexOf(productOptional.get());
             products.set(index, product);
-            return;
+        } else {
+            products.add(product);
         }
-
-        products.add(product);
     }
 
     @Override

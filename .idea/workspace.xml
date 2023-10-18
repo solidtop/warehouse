@@ -11,8 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e0794d31-660e-4183-83c4-a646e122d10a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/resource/ProductResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/service/Warehouse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/WarehouseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/WarehouseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/warehouse/repository/WarehouseRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/warehouse/repository/WarehouseRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +88,7 @@
       <recent name="com.example.warehouse.exception" />
     </key>
   </component>
-  <component name="RunManager" selected="JBoss/WildFly Server.JBoss/WildFly 29.0.1.Final">
+  <component name="RunManager" selected="JUnit.ProductValidationTest">
     <configuration name="JBoss/WildFly 29.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 29.0.1.Final" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER" value="false" />
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
@@ -177,23 +177,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductValidationTest.Should_ReturnViolations_IfInvalidProduct" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="warehouse" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.warehouse.validation.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.warehouse.validation" />
-      <option name="MAIN_CLASS_NAME" value="com.example.warehouse.validation.ProductValidationTest" />
-      <option name="METHOD_NAME" value="Should_ReturnViolations_IfInvalidProduct" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WarehouseRepositoryTest.Should_ReturnPaginatedProductsInCategory" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="WarehouseRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="warehouse" />
       <extension name="coverage">
         <pattern>
@@ -203,8 +187,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.example.warehouse.repository" />
       <option name="MAIN_CLASS_NAME" value="com.example.warehouse.repository.WarehouseRepositoryTest" />
-      <option name="METHOD_NAME" value="Should_ReturnPaginatedProductsInCategory" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -241,21 +224,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="WarehouseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="warehouse" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.warehouse.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.warehouse.service" />
+      <option name="MAIN_CLASS_NAME" value="com.example.warehouse.service.WarehouseTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="JBoss/WildFly Server.JBoss/WildFly 29.0.1.Final" />
-      <item itemvalue="JUnit.WarehouseRepositoryTest.Should_ReturnPaginatedProductsInCategory" />
+      <item itemvalue="JUnit.WarehouseRepositoryTest" />
+      <item itemvalue="JUnit.WarehouseTest" />
       <item itemvalue="JUnit.ProductValidationTest" />
-      <item itemvalue="JUnit.ProductValidationTest.Should_ReturnViolations_IfInvalidProduct" />
       <item itemvalue="JUnit.WarehouseRepositoryTest.Should_SaveNewProduct" />
       <item itemvalue="JUnit.WarehouseRepositoryTest.Should_UpdateExistingProduct" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.WarehouseRepositoryTest.Should_ReturnPaginatedProductsInCategory" />
         <item itemvalue="JUnit.ProductValidationTest" />
-        <item itemvalue="JUnit.ProductValidationTest.Should_ReturnViolations_IfInvalidProduct" />
+        <item itemvalue="JUnit.WarehouseTest" />
         <item itemvalue="JUnit.WarehouseRepositoryTest.Should_UpdateExistingProduct" />
         <item itemvalue="JUnit.WarehouseRepositoryTest.Should_SaveNewProduct" />
+        <item itemvalue="JUnit.WarehouseRepositoryTest" />
       </list>
     </recent_temporary>
   </component>

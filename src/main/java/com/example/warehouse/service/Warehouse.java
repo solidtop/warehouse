@@ -1,11 +1,11 @@
 package com.example.warehouse.service;
 
-import com.example.warehouse.dto.Metadata;
+import com.example.warehouse.dto.*;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.entity.Products;
-import com.example.warehouse.dto.Pagination;
 import com.example.warehouse.exception.ProductNotFoundException;
+import com.example.warehouse.dto.Pagination;
 import com.example.warehouse.repository.ProductRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -36,47 +36,47 @@ public class Warehouse implements ProductService {
     }
 
     @Override
-    public Product addNewProduct(String name, ProductCategory category, int rating) {
-        validateName(name);
-        validateRating(rating);
-
+    public Product addNewProduct(@Valid ProductDTO productDTO) {
         String id = generateId();
         LocalDateTime createdAt = LocalDateTime.now(clock);
         LocalDateTime updatedAt = LocalDateTime.now(clock);
-        Product product = new Product(id, name, category, rating, createdAt, updatedAt);
+        ProductCategory category = ProductCategory.toCategory(productDTO.category());
+        Product product = new Product(id, productDTO.name(), category, productDTO.rating(), createdAt, updatedAt);
         productRepository.save(product);
         return product;
     }
 
     @Override
-    public Product updateProduct(String productId, String name, ProductCategory category, int rating) {
+    public Product updateProduct(String productId, @Valid ProductDTO productDTO) {
         Product product = getProductById(productId);
-        validateName(name);
-        validateRating(rating);
-        return updateProduct(product, name, category, rating);
+        return updateProduct(product, productDTO);
     }
 
     @Override
-    public Product updateProduct(String productId, String name) {
+    public Product updateProduct(String productId, @Valid NameDTO nameDTO) {
         Product product = getProductById(productId);
-        validateName(name);
-        return updateProduct(product, name, product.category(), product.rating());
+        ProductDTO productDTO = new ProductDTO(nameDTO.name(), product.category().toString(), product.rating());
+        return updateProduct(product, productDTO);
     }
 
     @Override
-    public Product updateProduct(String productId, ProductCategory category) {
+    public Product updateProduct(String productId, @Valid CategoryDTO categoryDTO) {
         Product product = getProductById(productId);
-        return updateProduct(product, product.name(), category, product.rating());
+        ProductDTO productDTO = new ProductDTO(product.name(), categoryDTO.category(), product.rating());
+        return updateProduct(product, productDTO);
     }
 
     @Override
-    public Product updateProduct(String productId, int rating) {
+    public Product updateProduct(String productId, @Valid RatingDTO ratingDTO) {
         Product product = getProductById(productId);
-        validateRating(rating);
-        return updateProduct(product, product.name(), product.category(), rating);
+        ProductDTO productDTO = new ProductDTO(product.name(), product.category().toString(), ratingDTO.rating());
+        return updateProduct(product, productDTO);
     }
 
-    private Product updateProduct(Product product, String name, ProductCategory category, int rating) {
+    private Product updateProduct(@Valid Product product, @Valid ProductDTO productDto) {
+        String name = productDto.name();
+        ProductCategory category = ProductCategory.toCategory(productDto.category());
+        int rating = productDto.rating();
         LocalDateTime updatedAt = LocalDateTime.now(clock);
         Product updatedProduct = new Product(product.id(), name, category, rating, product.createdAt(), updatedAt);
         productRepository.save(updatedProduct);
@@ -90,22 +90,13 @@ public class Warehouse implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-
-    @Override
     public List<Product> getAllProducts(@Valid Pagination pagination) {
         return productRepository.findAll(pagination);
     }
 
     @Override
-    public List<Product> getProductsByCategory(ProductCategory category) {
-        List<Product> products = productRepository.findAll();
-        return products.stream()
-                .filter(product -> product.category() == category)
-                .sorted(Comparator.comparing(Product::name))
-                .toList();
+    public List<Product> getProductsByCategory(String category, @Valid Pagination pagination) {
+        return productRepository.findByCategory(category, pagination);
     }
 
     @Override
@@ -156,10 +147,11 @@ public class Warehouse implements ProductService {
     }
 
     @Override
-    public int getProductCountInCategory(ProductCategory category) {
+    public int getProductCountInCategory(String category) {
+        ProductCategory productCategory = ProductCategory.toCategory(category);
         List<Product> products = productRepository.findAll();
         return products.stream()
-                .filter(product -> product.category() == category)
+                .filter(product -> product.category() == productCategory)
                 .mapToInt(product -> 1)
                 .reduce(0, Integer::sum);
     }
@@ -171,15 +163,5 @@ public class Warehouse implements ProductService {
 
     private String generateId() {
         return UUID.randomUUID().toString();
-    }
-
-    private void validateName(String name) throws IllegalArgumentException {
-        if (name.isEmpty())
-            throw new IllegalArgumentException("Name cannot be empty");
-    }
-
-    private void validateRating(int rating) throws IllegalArgumentException {
-        if (rating < Products.MIN_RATING || rating > Products.MAX_RATING)
-            throw new IllegalArgumentException("Rating must be between " + Products.MIN_RATING + " and " + Products.MAX_RATING);
     }
 }

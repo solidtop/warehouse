@@ -4,7 +4,7 @@ import com.example.warehouse.validation.Category;
 import com.example.warehouse.validation.Name;
 import com.example.warehouse.validation.Rating;
 
-public record ProductDto(
+public record ProductDTO(
         @Name
         String name,
         @Category

@@ -4,6 +4,7 @@ import com.example.warehouse.dto.*;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.interceptor.Log;
+import com.example.warehouse.dto.Pagination;
 import com.example.warehouse.service.ProductService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -43,11 +44,8 @@ public class ProductResource {
     }
 
     @POST
-    public Response addNewProduct(@Valid ProductDto productDto) {
-        String name = productDto.name();
-        ProductCategory category = ProductCategory.toCategory(productDto.category());
-        int rating = productDto.rating();
-        productService.addNewProduct(name, category, rating);
+    public Response addNewProduct(@Valid ProductDTO productDTO) {
+        productService.addNewProduct(productDTO);
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -59,19 +57,15 @@ public class ProductResource {
 
     @PUT
     @Path("/{id}")
-    public Response updateProduct(@PathParam("id") String id, @Valid ProductDto productDto) {
-        String name = productDto.name();
-        ProductCategory category = ProductCategory.toCategory(productDto.category());
-        int rating = productDto.rating();
-        productService.updateProduct(id, name, category, rating);
+    public Response updateProduct(@PathParam("id") String id, @Valid ProductDTO productDTO) {
+        productService.updateProduct(id, productDTO);
         return Response.ok().build();
     }
 
     @PATCH
     @Path("/{id}")
-    public Response updateProductName(@PathParam("id") String id, @Valid NameDto nameDto) {
-        String name = nameDto.name();
-        productService.updateProduct(id, name);
+    public Response updateProductName(@PathParam("id") String id, @Valid NameDTO nameDTO) {
+        productService.updateProduct(id, nameDTO);
         return Response.noContent().build();
     }
 
@@ -83,8 +77,15 @@ public class ProductResource {
 
     @GET
     @Path("/categories/{category}")
-    public List<Product> getProductsByCategory(@PathParam("category") String category) {
-        ProductCategory productCategory = ProductCategory.toCategory(category);
-        return productService.getProductsByCategory(productCategory);
+    public Response getProductsByCategory(@PathParam("category") String category,
+                                          @BeanParam @Valid Pagination pagination,
+                                          @QueryParam("include") @DefaultValue("") String include){
+        List<Product> products = productService.getProductsByCategory(category, pagination);
+        if (include.equals("metadata")) {
+            Metadata metadata = productService.getMetadata(pagination);
+            return Response.ok(new ProductResponse(products, metadata)).build();
+        }
+
+        return Response.ok(products).build();
     }
 }

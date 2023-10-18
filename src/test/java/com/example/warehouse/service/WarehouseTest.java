@@ -1,9 +1,10 @@
 package com.example.warehouse.service;
 
-import com.example.warehouse.dto.Pagination;
+import com.example.warehouse.dto.*;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.entity.ProductCategory;
 import com.example.warehouse.exception.ProductNotFoundException;
+import com.example.warehouse.dto.Pagination;
 import com.example.warehouse.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ class WarehouseTest {
     private Warehouse warehouse;
     private LocalDateTime now;
     private Product mockProduct;
+    private Pagination mockPagination;
 
     @BeforeEach
     void setUp() {
@@ -35,15 +37,18 @@ class WarehouseTest {
                 mockProduct,
                 new Product("2", "Product2", ProductCategory.BOOKS, 0, now, now)
         );
+        mockPagination = new Pagination().setPage(1).setLimit(10);
 
         when(productRepository.findAll()).thenReturn(mockProducts);
+        when(productRepository.findAll(mockPagination)).thenReturn(mockProducts);
         when(productRepository.findById(mockProduct.id())).thenReturn(Optional.of(mockProduct));
         doNothing().when(productRepository).save(any());
     }
 
     @Test
     void Should_AddNewProduct() {
-        Product product = warehouse.addNewProduct("TestProduct", ProductCategory.BOOKS, 5);
+        ProductDTO productDTO = new ProductDTO("TestProduct", "books", 5);
+        Product product = warehouse.addNewProduct(productDTO);
 
         assertNotNull(product);
         assertEquals("TestProduct", product.name());
@@ -55,37 +60,12 @@ class WarehouseTest {
     }
 
     @Test
-    void Should_ThrowException_IfNameIsEmpty() {
-        assertThrows(IllegalArgumentException.class, () ->
-                warehouse.addNewProduct("", ProductCategory.BOOKS, 5));
-    }
-
-    @Test
-    void Should_ThrowException_IfRatingIsInvalid() {
-        assertThrows(IllegalArgumentException.class, () ->
-                warehouse.addNewProduct("Product", ProductCategory.BOOKS, -1));
-        assertThrows(IllegalArgumentException.class, () ->
-                warehouse.addNewProduct("Product", ProductCategory.BOOKS, 11));
-    }
-
-    @Test
     void Should_ReturnAllProducts() {
-        List<Product> products = warehouse.getAllProducts();
+        List<Product> products = warehouse.getAllProducts(mockPagination);
 
         int expected = 2;
         int actual = products.size();
         assertEquals(expected, actual);
-    }
-
-    @Test
-    void Should_ReturnPaginatedProducts() {
-        Pagination pagination = new Pagination().setPage(1).setLimit(1);
-        when(productRepository.findAll(pagination)).thenReturn(List.of(mockProduct));
-
-        List<Product> products = warehouse.getAllProducts(pagination);
-
-        assertEquals(1, products.size());
-        assertEquals(mockProduct, products.getFirst());
     }
 
     @Test
@@ -107,7 +87,7 @@ class WarehouseTest {
 
     @Test
     void Should_UpdateProductName() {
-        Product updatedProduct = warehouse.updateProduct(mockProduct.id(), "UpdatedProduct");
+        Product updatedProduct = warehouse.updateProduct(mockProduct.id(), new NameDTO("UpdatedProduct"));
 
         String expected = "UpdatedProduct";
         String actual = updatedProduct.name();
@@ -116,7 +96,7 @@ class WarehouseTest {
 
     @Test
     void Should_UpdateProductCategory() {
-        Product updatedProduct = warehouse.updateProduct(mockProduct.id(), ProductCategory.MUSIC);
+        Product updatedProduct = warehouse.updateProduct(mockProduct.id(), new CategoryDTO("music"));
 
         ProductCategory expected = ProductCategory.MUSIC;
         ProductCategory actual = updatedProduct.category();
@@ -125,7 +105,7 @@ class WarehouseTest {
 
     @Test
     void Should_UpdateProductRating() {
-        Product updatedProduct = warehouse.updateProduct(mockProduct.id(), 5);
+        Product updatedProduct = warehouse.updateProduct(mockProduct.id(), new RatingDTO(5));
 
         int expected = 5;
         int actual = updatedProduct.rating();
@@ -136,8 +116,9 @@ class WarehouseTest {
     void Should_UpdateAllProductDetails() {
         LocalDateTime createdAt = now.minusMinutes(1);
         Product mockProduct = new Product("1", "Product", ProductCategory.BOOKS, 2, createdAt, createdAt);
+        ProductDTO productDto = new ProductDTO("UpdatedProduct", "video_games", 10);
 
-        Product updatedProduct = warehouse.updateProduct(mockProduct.id(), "UpdatedProduct", ProductCategory.VIDEO_GAMES, 10);
+        Product updatedProduct = warehouse.updateProduct(mockProduct.id(), productDto);
 
         assertEquals("UpdatedProduct", updatedProduct.name());
         assertEquals(ProductCategory.VIDEO_GAMES, updatedProduct.category());
@@ -146,33 +127,17 @@ class WarehouseTest {
     }
 
     @Test
-    void Should_ThrowException_IfInvalidUpdateProductDetails() {
-        when(productRepository.findById("abc")).thenReturn(Optional.empty());
-
-        assertThrows(ProductNotFoundException.class, () ->
-                warehouse.updateProduct("abc", "UpdatedProduct"));
-        assertThrows(IllegalArgumentException.class, () ->
-                warehouse.updateProduct(mockProduct.id(), ""));
-        assertThrows(IllegalArgumentException.class, () ->
-                warehouse.updateProduct(mockProduct.id(), -1));
-        assertThrows(IllegalArgumentException.class, () ->
-                warehouse.updateProduct(mockProduct.id(), 11));
-    }
-
-    @Test
-    void Should_ReturnProductsInCategorySortedByAlphabeticalOrder() {
-        when(productRepository.findAll()).thenReturn(List.of(
-                new Product("1", "C", ProductCategory.BOOKS, 5, now, now),
-                new Product("2", "B", ProductCategory.MUSIC, 5, now, now),
-                new Product("3", "A", ProductCategory.BOOKS, 5, now, now)
+    void Should_ReturnProductsInCategory() {
+        when(productRepository.findByCategory("books", mockPagination)).thenReturn(List.of(
+                new Product("1", "A", ProductCategory.BOOKS, 5, now, now),
+                new Product("2", "B", ProductCategory.BOOKS, 5, now, now)
         ));
 
-        List<Product> booksProducts = warehouse.getProductsByCategory(ProductCategory.BOOKS);
+        List<Product> booksProducts = warehouse.getProductsByCategory("books", mockPagination);
 
         int expected = 2;
         int actual = booksProducts.size();
         assertEquals(expected, actual);
-        assertEquals('A', booksProducts.get(0).name().charAt(0));
     }
 
     @Test
@@ -229,7 +194,7 @@ class WarehouseTest {
                 new Product("3", "Product3", ProductCategory.BOOKS, 3, now, now)
         ));
 
-        long productCount = warehouse.getProductCountInCategory(ProductCategory.BOOKS);
+        long productCount = warehouse.getProductCountInCategory("books");
 
         int expected = 2;
         assertEquals(expected, productCount);
@@ -273,8 +238,9 @@ class WarehouseTest {
     void Should_ReturnEmptyResult_When_NoProductsFound() {
         when(productRepository.findAll()).thenReturn(Collections.emptyList());
 
-        List<Product> allProducts = warehouse.getAllProducts();
-        List<Product> booksProducts = warehouse.getProductsByCategory(ProductCategory.BOOKS);
+        Pagination pagination = new Pagination();
+        List<Product> allProducts = warehouse.getAllProducts(pagination);
+        List<Product> booksProducts = warehouse.getProductsByCategory("books", pagination);
         List<Product> productsSince = warehouse.getProductsSince(now.toLocalDate());
         List<Product> modifiedProducts = warehouse.getModifiedProducts();
         Set<ProductCategory> categories = warehouse.getCategoriesWithProducts();
@@ -288,5 +254,16 @@ class WarehouseTest {
         assertTrue(categories.isEmpty());
         assertTrue(topRatedProducts.isEmpty());
         assertTrue(productMap.isEmpty());
+    }
+
+    @Test
+    void Should_ReturnPaginatedProducts() {
+        Pagination pagination = new Pagination().setPage(1).setLimit(1);
+        when(productRepository.findAll(pagination)).thenReturn(List.of(mockProduct));
+
+        List<Product> products = warehouse.getAllProducts(pagination);
+
+        assertEquals(1, products.size());
+        assertEquals(mockProduct, products.getFirst());
     }
 }

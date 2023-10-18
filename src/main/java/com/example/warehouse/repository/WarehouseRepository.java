@@ -3,16 +3,13 @@ package com.example.warehouse.repository;
 import com.example.warehouse.dto.Metadata;
 import com.example.warehouse.entity.Product;
 import com.example.warehouse.dto.Pagination;
+import com.example.warehouse.entity.ProductCategory;
 import jakarta.ejb.Lock;
 import jakarta.ejb.LockType;
 import jakarta.ejb.Singleton;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Singleton
 public class WarehouseRepository implements ProductRepository {
@@ -22,6 +19,10 @@ public class WarehouseRepository implements ProductRepository {
         products = new ArrayList<>();
     }
 
+    public WarehouseRepository(List<Product> products) {
+        this.products = products;
+    }
+
     @Override
     @Lock(LockType.WRITE)
     public void save(@Valid Product product) {
@@ -29,10 +30,9 @@ public class WarehouseRepository implements ProductRepository {
         if (productOptional.isPresent()) {
             int index = products.indexOf(productOptional.get());
             products.set(index, product);
-            return;
+        } else {
+            products.add(product);
         }
-
-        products.add(product);
     }
 
     @Override
@@ -46,7 +46,6 @@ public class WarehouseRepository implements ProductRepository {
     public List<Product> findAll(@Valid Pagination pagination) {
         long page = pagination.getPage();
         long limit = pagination.getLimit();
-
         long offset = (page - 1) * limit;
 
         return products.stream()
@@ -57,10 +56,26 @@ public class WarehouseRepository implements ProductRepository {
 
     @Override
     @Lock(LockType.READ)
-    public Optional<Product> findById(@NotNull String productId) {
+    public Optional<Product> findById(String productId) {
         return products.stream()
                 .filter(product -> product.id().equals(productId))
                 .findFirst();
+    }
+
+    @Override
+    @Lock(LockType.READ)
+    public List<Product> findByCategory(String category, @Valid Pagination pagination) {
+        long page = pagination.getPage();
+        long limit = pagination.getLimit();
+        long offset = (page - 1) * limit;
+
+        ProductCategory productCategory = ProductCategory.toCategory(category);
+        return products.stream()
+                .filter(product -> product.category() == productCategory)
+                .skip(offset)
+                .limit(limit)
+                .sorted(Comparator.comparing(Product::name))
+                .toList();
     }
 
     @Override

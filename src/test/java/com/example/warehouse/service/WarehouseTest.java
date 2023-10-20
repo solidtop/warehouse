@@ -264,6 +264,6 @@ class WarehouseTest {
         List<Product> products = warehouse.getAllProducts(pagination);
 
         assertEquals(1, products.size());
-        assertEquals(mockProduct, products.getFirst());
+        assertEquals(mockProduct, products.get(0));
     }
 }

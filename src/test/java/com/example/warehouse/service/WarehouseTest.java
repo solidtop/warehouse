@@ -1,3 +1,4 @@
+// Testing github actions
 package com.example.warehouse.service;
 
 import com.example.warehouse.dto.*;
@@ -264,6 +265,6 @@ class WarehouseTest {
         List<Product> products = warehouse.getAllProducts(pagination);
 
         assertEquals(1, products.size());
-        assertEquals(mockProduct, products.getFirst());
+        assertEquals(mockProduct, products.get(0));
     }
 }

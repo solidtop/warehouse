@@ -11,8 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e0794d31-660e-4183-83c4-a646e122d10a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/WarehouseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/warehouse/repository/WarehouseRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/warehouse/repository/WarehouseRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/warehouse/repository/WarehouseRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/warehouse/service/WarehouseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/warehouse/service/WarehouseTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +28,7 @@
         <option value="Record" />
         <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -51,29 +52,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;1.0.0&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "1.0.1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Java Projects\warehouse\src\test\java" />
+      <recent name="D:\Java Projects\warehouse\src\main\webapp" />
+      <recent name="D:\Java Projects\warehouse\src\main\WEB-INF" />
       <recent name="D:\Java Projects\warehouse\src\main\java\com\example\warehouse" />
+      <recent name="D:\Java Projects\warehouse\src\main\resources\META-INF" />
+      <recent name="D:\Java Projects\warehouse\src\main\resources\WEB-INF" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -88,7 +92,7 @@
       <recent name="com.example.warehouse.exception" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProductValidationTest">
+  <component name="RunManager" selected="JBoss/WildFly Server.JBoss/WildFly 29.0.1.Final">
     <configuration name="JBoss/WildFly 29.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 29.0.1.Final" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER" value="false" />
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
@@ -177,21 +181,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WarehouseRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="warehouse" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.warehouse.repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.warehouse.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.example.warehouse.repository.WarehouseRepositoryTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="WarehouseRepositoryTest.Should_SaveNewProduct" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="warehouse" />
       <extension name="coverage">
@@ -239,9 +228,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="WarehouseTest.Should_ReturnPaginatedProducts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="warehouse" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.warehouse.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.warehouse.service" />
+      <option name="MAIN_CLASS_NAME" value="com.example.warehouse.service.WarehouseTest" />
+      <option name="METHOD_NAME" value="Should_ReturnPaginatedProducts" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="JBoss/WildFly Server.JBoss/WildFly 29.0.1.Final" />
-      <item itemvalue="JUnit.WarehouseRepositoryTest" />
+      <item itemvalue="JUnit.WarehouseTest.Should_ReturnPaginatedProducts" />
       <item itemvalue="JUnit.WarehouseTest" />
       <item itemvalue="JUnit.ProductValidationTest" />
       <item itemvalue="JUnit.WarehouseRepositoryTest.Should_SaveNewProduct" />
@@ -249,11 +254,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProductValidationTest" />
         <item itemvalue="JUnit.WarehouseTest" />
+        <item itemvalue="JUnit.WarehouseTest.Should_ReturnPaginatedProducts" />
+        <item itemvalue="JUnit.ProductValidationTest" />
         <item itemvalue="JUnit.WarehouseRepositoryTest.Should_UpdateExistingProduct" />
         <item itemvalue="JUnit.WarehouseRepositoryTest.Should_SaveNewProduct" />
-        <item itemvalue="JUnit.WarehouseRepositoryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -281,6 +286,8 @@
       <workItem from="1697440116038" duration="13515000" />
       <workItem from="1697526497299" duration="16149000" />
       <workItem from="1697614717381" duration="370000" />
+      <workItem from="1697785158216" duration="432000" />
+      <workItem from="1697788233940" duration="9096000" />
     </task>
     <servers />
   </component>
